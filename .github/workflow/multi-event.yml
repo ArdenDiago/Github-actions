@@ -1,0 +1,22 @@
+name: multi-event
+
+on:
+  push: 
+    branch: 
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check basic information"
+        run: |
+          echo "REF: $GITHUB_REF"
+          echo "Job ID: $GITHUB_JOB"
+          echo "Action: $GITHUB_ACTION"
+          echo "Actor: $GITHUB_ACTOR"
+          echo "Event Name: $GITHUB_EVENT_NAME"
