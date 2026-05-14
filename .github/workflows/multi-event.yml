@@ -2,7 +2,7 @@ name: multi-event
 
 on:
   push: 
-    branch: 
+    branches: 
       - main
       - dev
   pull_request:
