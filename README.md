@@ -1,1 +1,1 @@
-# Project aobut github actions
+This repository containing all examples and notes for the GitHub Actions course.
