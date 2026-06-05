@@ -1,0 +1,32 @@
+name: o8 - Using Variables
+
+on:
+    push:
+    workflow_dispatch:
+
+env:
+    GLOBAL_VAR: "This is a global env variable"
+    OVERRIDE_VAR: "This is a global env variable that will be overridden"
+
+jobs:
+    using-variables:
+        runs-on: ubuntu-latest   
+        env:
+            JOB_VAR: "This is a job env variable"  
+            OVERRIDE_VAR: "This is a job env variable that overrides the global one"
+        steps:
+            - name: Print env variables
+              env:
+                STEP_VAR: "This is a step environment variable"
+                step-var: "This is another step environment variable" # Deos not run well because of the -
+              run: |
+                echo "Step env var: ${{ env.STEP_VAR }}"
+                echo "Step env var: ${{ env.step-var }}"
+                echo "Job env var: ${{ env.JOB_VAR }}"  
+                echo "Global env var: ${{ env.GLOBAL_VAR }}"
+                echo "Overridden env var: ${{ env.OVERRIDE_VAR }}"
+            - name: Overwriting env variable at step level
+              env:
+                OVERRIDE_VAR: "This is a step env variable that overrides the job and global one"
+              run: |
+                 echo "Overridden env var at step level: ${{ env.OVERRIDE_VAR }}"
