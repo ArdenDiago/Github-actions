@@ -1,7 +1,7 @@
 name: o8 - Using Variables
 
 on:
-    push:
+   # push:
     workflow_dispatch:
 
 env:
@@ -30,3 +30,4 @@ jobs:
                 OVERRIDE_VAR: "This is a step env variable that overrides the job and global one"
               run: |
                  echo "Overridden env var at step level: ${{ env.OVERRIDE_VAR }}"
+        
