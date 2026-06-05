@@ -1,9 +1,14 @@
 name: 06 - Context
-run_name: My Custom Wrokflow run name - ${{ runner.os }}
+run-name: 06 Context | Debug - ${{ inputs.debug}}
 
 on: 
     push:
     workflow_dispatch:
+      inputs:
+        debug:
+          type: boolean
+          default: false
+
 
 jobs:
     echo-data:
