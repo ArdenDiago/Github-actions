@@ -1,4 +1,5 @@
 name: 06 - Context
+run_name: My Custom Wrokflow run name - ${{ runner.os }}
 
 on: 
     push:
