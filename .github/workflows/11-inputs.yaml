@@ -1,0 +1,41 @@
+name: 11 - workflow with inputs
+
+on: 
+    workflow_dispatch:
+        inputs:
+            dry-run:
+                type: boolean
+                default: false
+                description: 'Whether to perform a dry run or not'
+            target:
+                type: environment
+                required: true
+                description: 'The target environment to deploy to'
+            tag:
+                type: choice
+                options:
+                    - v1
+                    - v2
+                    - v3
+                description: 'The version tag to deploy'
+                default: v3
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: build
+              run: |
+                echo "Version tag: ${{ github.event.inputs.tag }}"
+    deploy:
+        runs-on: ubuntu-latest
+        if: ${{ !inputs.dry-run}}
+        environment: ${{ inputs.target }}
+        steps:
+            - name: deploy
+              run: |
+                if [ "${{ github.event.inputs.dry-run }}" = "true" ]; then
+                  echo "Performing a dry run deployment to ${{ github.event.inputs.target }}"
+                else
+                  echo "Deploying to ${{ github.event.inputs.target }}"
+                fi
