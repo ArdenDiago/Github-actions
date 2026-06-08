@@ -11,7 +11,29 @@ on:
 jobs:
   caching:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./13-caching
+    
     steps:
-      - name: Check out repository
+      - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: '20.x'
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Building
+        run: npm run build
+
+      - name: Deploy to nonProd
+        run: echo "Deploying to non prod environment"
+    
+      
         
