@@ -1,0 +1,17 @@
+name: 13 - Using Caching
+
+on:
+  workflow_dispatch:
+    inputs:
+      use-cache:
+        description: Whether to execute cache step
+        type: boolean
+        default: true
+
+jobs:
+  caching:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        
