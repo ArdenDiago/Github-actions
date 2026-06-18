@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: echo a string
         run: echo "Hello World"
-        
+
       - name: Multi run commands
         run: |
           node -v
-          npm - v
+          npm -v
