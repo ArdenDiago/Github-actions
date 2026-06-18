@@ -22,4 +22,15 @@ jobs:
       
       - name: sending an notice message with params
         run: echo "::notice title:notice title,file=app.js,line=2,endLine=3,endColumn=7:Missing Semicolon"
-
+      
+      - name: Group of logs
+        run: |
+          echo "::group::My group title"
+          echo "Inside group"
+          echo "::endgroup::"
+      
+      - name: Masking a value
+        run: "::add-mask::Seceret Sting"
+      
+      - name: Ecoh a Seceret 
+        run: Echo "Secret String"
