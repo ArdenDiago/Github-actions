@@ -30,7 +30,7 @@ jobs:
           echo "::endgroup::"
       
       - name: Masking a value
-        run: "::add-mask::Seceret Sting"
+        run: echo "::add-mask::Seceret Sting"
       
       - name: Ecoh a Seceret 
-        run: Echo "Secret String"
+        run: echo "Secret String"
