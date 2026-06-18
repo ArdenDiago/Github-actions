@@ -19,13 +19,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: view sw version
-        run: sw_version
+        run: sw_vers
     
   dependanct-jobs:
     runs-on: windows-latest
     needs: runn-shell-commands
     steps:
       - name: echo a string
-        run: Write-Oouput "Windows String"
+        run: Write-Output "Windows String"
       - name: Error steps
         run: doesnotexits
