@@ -1,0 +1,95 @@
+name: 13 - Using Caching
+
+on:
+  workflow_dispatch:
+    inputs:
+      use-cache:
+        description: Whether to execute cache step
+        type: boolean
+        default: true
+      node-version:
+        description: Node Version
+        type: choice
+        options:
+            - '18.x'
+            - '20.x'
+            - '22.x'
+        default: '20.x'
+
+jobs:
+  install-depts:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./13-caching
+    outputs:
+        cache-key: ${{ steps.cache-key.outputs.cache-key }}
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: ${{ inputs.node-version }}
+      
+      - name: Calculate cache key
+        id: cache-key
+        run: |
+         echo "Cache Key: = ${{ hashFiles('13-caching/package-lock.json') }}" >> "${GITHUB_OUTPUTS}"
+
+      - name: Download cached dependencies
+        uses: actions/cache@v3
+        if: ${{ inputs.use-cache }}
+        id: cache
+        with:
+            path: 13-caching/node_modules
+            key: deps-node-modules-${{ hashFiles('13-caching/package-lock.json') }}
+
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          npm ci
+
+    
+  caching:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./13-caching
+    
+    needs: install-depts
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: ${{ inputs.node-version }}
+
+      - name: Download cached dependencies
+        uses: actions/cache@v3
+        if: ${{ inputs.use-cache }}
+        id: cache
+        with:
+            path: 13-caching/node_modules
+            key: ${{ needs.install-depts.outputs.cache-key }}
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Building
+        run: npm run build
+
+      - name: Deploy to nonProd
+        run: echo "Deploying to non prod environment"
+    
+      
+        

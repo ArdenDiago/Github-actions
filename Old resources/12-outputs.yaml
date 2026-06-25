@@ -1,0 +1,52 @@
+name: working with outputs
+
+on:
+    workflow_dispatch:
+        inputs:
+            build-status:
+                type: choice
+                options:
+                    - success
+                    - failure
+                description: 'The build status to output'
+                default: success
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        outputs:
+            build-status: ${{ steps.build.outputs.build-status }}
+            output1: ${{ steps.build.outputs.Output1 }}
+        steps:
+            - name: display GITHUB_OUTPUT
+              run: |
+                echo "GITHUB_OUTPUT: $GITHUB_OUTPUT"
+            - name: build
+              id: build
+              run: |
+                echo "$GITHUB_OUTPUT"
+                echo "build-status=${{ inputs.build-status }}" >> $GITHUB_OUTPUT
+                echo "Output1=Value1" >> $GITHUB_OUTPUT
+                echo "Output2=Value2" >> $GITHUB_OUTPUT
+
+                cat "$GITHUB_OUTPUT"
+
+                echo "mistake=true" > "$GITHUB_OUTPUT"
+                cat "$GITHUB_OUTPUT"
+            - name: Step with mistake
+              run: | 
+                echo "mistake=true" > "$GITHUB_OUTPUT"
+                cat "$GITHUB_OUTPUT"
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - name: Deploy
+              if: ${{ needs.build.outputs.build-status == 'success' }}
+              run: |
+                echo "Deploying with build status: ${{ needs.build.outputs.build-status }}"
+
+            - name: print output1
+              run: |
+                echo "Output1 from build job: ${{ needs.build.outputs.output1 }}"
