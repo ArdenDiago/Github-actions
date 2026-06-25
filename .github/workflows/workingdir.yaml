@@ -3,9 +3,28 @@ name: Workflow Dir & Shell
 on: 
   - push
 
+defaults:
+  run:
+    shell: bash
+    # working-directory: /de/ed
+
 
 jobs:
     display-wf-info:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: /de/ed
+        steps:
+            - name: display working diertory
+              run: | 
+                pwd 
+                ls -a
+                echo GITHUB_SHA
+                echo $GITHUB_REPOSITORY
+                echo $GITHUB_WORKSPACE
+
+    display-wf-info-win:
         runs-on: ubuntu-latest
         steps:
             - name: display working diertory
@@ -18,11 +37,20 @@ jobs:
 
     display-wf-info-windows:
         runs-on: windows-latest
+        defaults:
+            run:
+              shell: pwsh 
         steps:
             - name: display working diertory
               run: | 
-                pwd 
-                ls -a
-                echo $GITHUB_SHA
-                echo $GITHUB_REPOSITORY
-                echo $GITHUB_WORKSPACE
+                Get-Location
+                dir
+                echo $env:GITHUB_SHA
+                echo $env:GITHUB_REPOSITORY
+                echo $env:GITHUB_WORKSPACE
+            
+            - name: Python Shell
+              shell: python
+              run: |
+                import platform 
+                print(platform.processor())
