@@ -1,7 +1,7 @@
 name: running an instance
 
 on:
-  - push
+  - workflow_dispatch
 
 
 jobs:
