@@ -11,5 +11,5 @@ jobs:
       - name: display  message
         run: echo "Hello to this world"
       - name: get systeme info
-        run: echo "{github.event_name}"
+        run: echo "${{github.event_name}}"
     
