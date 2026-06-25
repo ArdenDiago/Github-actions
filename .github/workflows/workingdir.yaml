@@ -14,7 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         defaults:
           run:
-            working-directory: /de/ed
+            working-directory: /usr/bin
         steps:
             - name: display working diertory
               run: | 
