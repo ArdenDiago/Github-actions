@@ -1,0 +1,13 @@
+name: running an instance
+
+on:
+  - push
+
+
+jobs:
+  echo-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: display  message
+        run: echo "Hello to this world"
+    
