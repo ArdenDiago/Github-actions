@@ -1,21 +1,22 @@
-name: checkout 
+name: Checkout
 
 on:
-  - push
-
+  push:
 
 jobs:
-    checkout-and-display-files:
-        runs-on: ubuntu-latest
-        steps:
-            - name: List files before
-              run: ls -a
-            - name: checkout
-              run: |
-                git init
-                git remote add orgin 'https://$GITHUB_ACTOR:${{secrets.GITHUB_TOKEN}}@github.com$GITHUB_REPOSITORY.git'
-                git fetch orgin
-                git checkout main
+  checkout-and-display-files:
+    runs-on: ubuntu-latest
 
-            - name: List files after
-              run: ls -a
+    steps:
+      - name: List files before
+        run: ls -a
+
+      - name: Manual checkout
+        run: |
+          git init
+          git remote add origin https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git
+          git fetch origin
+          git checkout -b main origin/main
+
+      - name: List files after
+        run: ls -a
