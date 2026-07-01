@@ -6,6 +6,8 @@ jobs:
     job-1:
         runs-on: ubuntu-latest
         steps:
+          - name: fail
+            run: exit 1
           - name: Step 1
             run: sleep 30
           - name: Runs on Failure
