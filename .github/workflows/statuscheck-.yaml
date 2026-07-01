@@ -1,0 +1,19 @@
+name: Status Check
+
+on:
+    - push
+
+
+jobs:
+    job-1:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Sleep
+              run: sleep 20
+            - name: runs on failure
+              if: failure()
+              run: echo "Job Failed"
+            - name: Runs on success
+              if: success()
+              run: echo 'runs on success'
+            f
