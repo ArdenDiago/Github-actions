@@ -1,6 +1,7 @@
 name: Expression and Contexts
 
-on: [push, pull_request, issues, workflow_dispatch]
+# on: [push, pull_request, issues, workflow_dispatch]
+on: workflow_dispatch
 
 run-name: "Expression & Context by @${{ github.actor }}, event: ${{ github.event_name }}"
 
