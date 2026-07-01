@@ -25,6 +25,11 @@ jobs:
               run: |
                 Delemeter=1234
                 echo "Random_joke<<Delemeter" > "$GITHUB_ENV"
+                echo "Here is a joke 1" >> "$GITHUB_ENV"
+                echo "Here is a joke 2" >> "$GITHUB_ENV"
+                echo "Here is a joke 3" >> "$GITHUB_ENV"
+                curl -s https://icanhazdadjoke.com/ >> "$GITHUB_ENV"
+                echo ""
                 echo "$Delemeter" >> "$GITHUB_ENV"
 
             - name: Logs custom Env vars
