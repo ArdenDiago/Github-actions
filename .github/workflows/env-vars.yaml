@@ -41,3 +41,4 @@ jobs:
                 echo '${{ env.JOB_LEVEL_ENV }}'
                 echo '${{ env.WF_LEVEL_ENV }}'
                 echo '${{ env.new_env_var }}'
+                echo "${{env.Random_joke}}"
